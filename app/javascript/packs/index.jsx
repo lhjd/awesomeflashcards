@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 // import PropTypes from 'prop-types'
 // import TopNavBar from './components/TopNavBar'
 import App from './App';
-import 'normalize.css'; 
+// import 'application.scss';
 
 // const Hello = props => (
 //   <div>

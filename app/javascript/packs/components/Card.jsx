@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PaperSheet() {
+export default function PaperSheet(props) {
+
   const classes = useStyles();
 
   return (
@@ -25,11 +26,8 @@ export default function PaperSheet() {
         <Typography 
           variant="h5"
           component="h3">
-          Wow
+          {props.word}
         </Typography>
-        {/* <Typography component="p">
-        Paper can be used to build surface or other elements for your application.
-      </Typography> */}
       </Paper>
     </Box>
   );

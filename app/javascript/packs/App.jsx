@@ -1,19 +1,42 @@
-import React from 'react';
-import TopNavBar from './components/TopNavBar';
-import Card from './components/Card';
-import Container from '@material-ui/core/Container';
+import React, { useReducer } from 'react';
+import Navbar from './components/Navbar';
+import Cards from './components/Cards';
+import Controls from './components/Controls';
 
-const app = () => {
+export const Context = React.createContext(null);
 
-    return (
-        <div>
-            <TopNavBar />
-            <Container>
-                <Card />
-            </Container>
-        </div>
-    );
-
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'NEXT_WORD':
+      if (state.wordIndex < state.words.length - 1) {
+          return {...state, wordIndex: state.wordIndex + 1};
+      } else {
+          return state;
+      }
+    case 'PREVIOUS_WORD':
+      if (state.wordIndex === 0) {
+          return state;
+      } else {
+          return {...state, wordIndex: state.wordIndex - 1};
+      }
+    default:
+      throw new Error("reducer error");
+  }
 }
 
-export default app;
+export default function App() {
+
+    const words = ["one", "two", "three"];
+
+    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words });
+    
+    return (
+        <>
+            <Navbar />
+            <Context.Provider value={dispatch}>
+                <Cards words={state.words} wordIndex={state.wordIndex} />
+                <Controls />
+            </Context.Provider>
+        </>
+    );
+}
