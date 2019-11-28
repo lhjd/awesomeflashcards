@@ -24,11 +24,11 @@ import 'normalize.css';
 //   name: PropTypes.string
 // }
 
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <App />,
     // <Hello name="React" />,
     // document.body.appendChild(document.createElement('div')),
     document.getElementById('root')
   )
-})
+// })
