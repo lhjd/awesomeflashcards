@@ -5,9 +5,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import TopNavBar from './TopNavBar'
 
 const Hello = props => (
-  <div>Hello {props.name}!</div>
+  <div>
+    <TopNavBar />
+    <div>Hello {props.name}!</div>
+  </div>
 )
 
 Hello.defaultProps = {
