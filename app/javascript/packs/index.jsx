@@ -4,17 +4,17 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import TopNavBar from './components/TopNavBar'
+// import PropTypes from 'prop-types'
+// import TopNavBar from './components/TopNavBar'
 import App from './App';
 import 'normalize.css'; 
 
-const Hello = props => (
-  <div>
-    <TopNavBar />
-    {/* <div>Hello {props.name}!</div> */}
-  </div>
-)
+// const Hello = props => (
+//   <div>
+//     <TopNavBar />
+//     <div>Hello {props.name}!</div>
+//   </div>
+// )
 
 // Hello.defaultProps = {
 //   name: 'David'
