@@ -5,28 +5,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import TopNavBar from './TopNavBar'
-import BottomNavBar from './components/BottomNavBar'
+import TopNavBar from './components/TopNavBar'
+import App from './App';
 
 const Hello = props => (
   <div>
     <TopNavBar />
-    <div>Hello {props.name}!</div>
-    <BottomNavBar />
+    {/* <div>Hello {props.name}!</div> */}
   </div>
 )
 
-Hello.defaultProps = {
-  name: 'David'
-}
+// Hello.defaultProps = {
+//   name: 'David'
+// }
 
-Hello.propTypes = {
-  name: PropTypes.string
-}
+// Hello.propTypes = {
+//   name: PropTypes.string
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
-    document.body.appendChild(document.createElement('div')),
+    <App />,
+    // <Hello name="React" />,
+    // document.body.appendChild(document.createElement('div')),
+    document.getElementById('root')
   )
 })
