@@ -6,11 +6,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import TopNavBar from './TopNavBar'
+import BottomNavBar from './components/BottomNavBar'
 
 const Hello = props => (
   <div>
     <TopNavBar />
     <div>Hello {props.name}!</div>
+    <BottomNavBar />
   </div>
 )
 
