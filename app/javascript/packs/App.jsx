@@ -38,7 +38,7 @@ export default function App() {
                     {front: "above", back: "cranberry"},
                     {front: "across", back: "durian"}, 
                     {front: "after", back: "egg"}, 
-                    {front: "again", back: "fruit"}];
+                    {front: "again", back: "banana"}];
 
     let frontWord = words[0].front;
     let backWord = words[0].back;

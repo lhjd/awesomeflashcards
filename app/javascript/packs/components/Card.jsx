@@ -8,8 +8,11 @@ import classnames from 'classnames';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    margin: 0,
     padding: theme.spacing(3, 2),
-    width: "50vw",
+    // padding: "10px",
+    width: "200px",
+    // width: "50vw",
     height: "200px",
   },
 }));
@@ -36,7 +39,6 @@ export default function PaperSheet(props) {
   }
 
   return (
-
 
     <Box className={styles.flipCard} onClick={handleClick}>
       <Box className={flipCardInner}>
