@@ -27,12 +27,12 @@
 }
   
 .flipCardFront {
-    background-color: white;
+    background-color: transparent;
     color: black;
 }
   
 .flipCardBack {
-    background-color: white;
+    background-color: transparent;
     color: black;
     transform: rotateY(180deg);
 }
