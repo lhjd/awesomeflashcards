@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../App';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 
 export default function Button(props) {
 
@@ -17,6 +19,8 @@ export default function Button(props) {
     }
 
     return (
-        <button onClick={() => handleClick(props.actionType)}>{props.btnText}</button>
+        <IconButton onClick={() => handleClick(props.actionType)}>
+            <Icon>{props.btnText}</Icon>
+        </IconButton>
     );
 }
