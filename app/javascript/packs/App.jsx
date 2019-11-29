@@ -26,7 +26,7 @@ const reducer = (state, action) => {
 
 export default function App() {
 
-    const words = ["one", "two", "three"];
+    const words = ["a, an", "about", "above", "across","after", "again"];
 
     const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words });
     
@@ -35,7 +35,7 @@ export default function App() {
             <Navbar />
             <Context.Provider value={dispatch}>
                 <Cards words={state.words} wordIndex={state.wordIndex} />
-                <Controls />
+                {/* <Controls /> */}
             </Context.Provider>
         </>
     );
