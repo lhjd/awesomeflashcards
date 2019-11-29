@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import Navbar from './components/Navbar';
-import Cards from './components/Cards';
+import Card from './components/Card';
 import Controls from './components/Controls';
 
 export const Context = React.createContext(null);
@@ -9,7 +9,9 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'NEXT_WORD':
       if (state.wordIndex < state.words.length - 1) {
-          return {...state, wordIndex: state.wordIndex + 1};
+          let newWordIndex = state.wordIndex + 1;
+          let newWord = state.words[newWordIndex];
+          return {...state, wordIndex: newWordIndex, word: newWord };
       } else {
           return state;
       }
@@ -17,7 +19,9 @@ const reducer = (state, action) => {
       if (state.wordIndex === 0) {
           return state;
       } else {
-          return {...state, wordIndex: state.wordIndex - 1};
+          let newWordIndex = state.wordIndex - 1;
+          let newWord = state.words[newWordIndex];
+          return {...state, wordIndex: newWordIndex, word: newWord };
       }
     default:
       throw new Error("reducer error");
@@ -27,14 +31,15 @@ const reducer = (state, action) => {
 export default function App() {
 
     const words = ["a, an", "about", "above", "across","after", "again"];
+    let word = words[0];
 
-    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words });
+    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words: words, word: word });
     
     return (
         <>
             <Navbar />
             <Context.Provider value={dispatch}>
-                <Cards words={state.words} wordIndex={state.wordIndex} />
+                <Card word={state.word} />
                 {/* <Controls /> */}
             </Context.Provider>
         </>
