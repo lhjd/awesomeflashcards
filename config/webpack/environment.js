@@ -1,5 +1,12 @@
 const { environment } = require('@rails/webpacker')
 
+// module.exports = environment
+
+//webpacker webpack config
+environment.loaders.get('sass').use.splice(-1, 0, {
+    loader: 'resolve-url-loader'
+});
+
 module.exports = environment
 
 // const { environment } = require('@rails/webpacker')
