@@ -11,16 +11,20 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: 0,
     padding: theme.spacing(3, 2),
-    // padding: "10px",
     width: "200px",
-    // width: "50vw",
     height: "200px",
+    borderRadius: "20px",
+    // background: 'red'
   },
+
+  back: {
+    background: '#ccff90'
+  }
 }));
 
 const cx = classnames.bind(styles)
 
-export default function PaperSheet(props) {
+export default function Card(props) {
 
   const dispatch = useContext(Context);
 
@@ -28,19 +32,20 @@ export default function PaperSheet(props) {
 
   const classes = useStyles();
 
-  // const [flipped, setFlipped] = useState(false);
-
-  console.log("flipped", flipped);
-
   const flipCardInner = cx(
     styles.flipCardInner, // styles that never change
     { // dynamic styles
       [styles.flipped]: flipped // make the key the style name, and the value the dynamic boolean
     }
-  )
+  );
+
+  const backStyle = classnames(
+    classes.root,
+    classes.back
+  );
+
 
   const handleClick = () => {
-    // setFlipped(!flipped);
     dispatch({ type: "FLIP" });
   }
 
@@ -56,7 +61,7 @@ export default function PaperSheet(props) {
           </Paper>
         </Box>
         <Box className={styles.flipCardBack}>
-          <Paper className={classes.root} elevation={24}>
+          <Paper className={backStyle} elevation={24}>
             <Typography variant="h5" component="h3">
               {backWord}
             </Typography>
