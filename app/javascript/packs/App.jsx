@@ -3,6 +3,8 @@ import Navbar from './components/Navbar';
 import Card from './components/Card';
 import Controls from './components/Controls';
 import Box from '@material-ui/core/Box';
+import axios from 'axios';
+import { responsiveFontSizes } from '@material-ui/core';
 
 export const Context = React.createContext(null);
 
@@ -26,6 +28,11 @@ const reducer = (state, action) => {
           let newBackWord = state.words[newWordIndex].back;
           return {...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord };
       }
+    case 'INITIALIZE_CARDS':
+       let initialWords = action.payload;
+       let initialFrontWord = initialWords[0].front;
+       let initialBackWord = initialWords[0].back;
+       return {...state, words: initialWords, frontWord: initialFrontWord, backWord: initialBackWord};
     default:
       throw new Error("reducer error");
   }
@@ -33,20 +40,42 @@ const reducer = (state, action) => {
 
 export default function App() {
 
-    useEffect(() => console.log('mounted'), []);
 
-    const words = [{front: "a, an", back: "apple"}, 
-                    {front: "about", back: "banana"},
-                    {front: "above", back: "cranberry"},
-                    {front: "across", back: "durian"}, 
-                    {front: "after", back: "egg"}, 
-                    {front: "again", back: "banana"}];
+    useEffect(() => {
+        axios.get('/cards.json')
+        .then(function (response) {
+          // handle success
+          dispatch({type: 'INITIALIZE_CARDS', payload: response.data})
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .finally(function () {
+          // always executed
+        });
+    }, []);
 
-    let frontWord = words[0].front;
-    let backWord = words[0].back;
+    // const [cards, setCards] = useState([]);
+    // const [frontOfCard, setFrontOfCard] = useState("");
+    // const [backOfCafrd, setBackOfCard] = useState("");
 
-    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words, frontWord, backWord });
-    
+    // const words = [{front: "a, an", back: "apple"}, 
+    //                 {front: "about", back: "banana"},
+    //                 {front: "above", back: "cranberry"},
+    //                 {front: "across", back: "durian"}, 
+    //                 {front: "after", back: "egg"}, 
+    //                 {front: "again", back: "banana"}];
+
+    // let frontWord = words[0].front;
+    // let backWord = words[0].back;
+
+    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words: [], frontWord: "", backWord: ""});
+
+    if (!state.words) {
+        return false;
+    } else {
+
     return (
         <>
             <Navbar />
@@ -58,4 +87,5 @@ export default function App() {
             </Context.Provider>
         </>
     );
+    }
 }
