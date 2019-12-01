@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import styles from './Card.module.scss';
 import classnames from 'classnames';
+import { Context } from '../App';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,11 +22,15 @@ const cx = classnames.bind(styles)
 
 export default function PaperSheet(props) {
 
-  let {frontWord, backWord} = props;
+  const dispatch = useContext(Context);
+
+  let {frontWord, backWord, flipped} = props;
 
   const classes = useStyles();
 
-  const [flipped, setFlipped] = useState(false);
+  // const [flipped, setFlipped] = useState(false);
+
+  console.log("flipped", flipped);
 
   const flipCardInner = cx(
     styles.flipCardInner, // styles that never change
@@ -35,7 +40,8 @@ export default function PaperSheet(props) {
   )
 
   const handleClick = () => {
-    setFlipped(!flipped);
+    // setFlipped(!flipped);
+    dispatch({ type: "FLIP" });
   }
 
   return (

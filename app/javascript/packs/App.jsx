@@ -15,7 +15,7 @@ const reducer = (state, action) => {
           let newWordIndex = state.wordIndex + 1;
           let newFrontWord = state.words[newWordIndex].front;
           let newBackWord = state.words[newWordIndex].back;
-          return {...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord };
+          return {...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord, flipped: false };
       } else {
           return state;
       }
@@ -26,20 +26,22 @@ const reducer = (state, action) => {
           let newWordIndex = state.wordIndex - 1;
           let newFrontWord = state.words[newWordIndex].front;
           let newBackWord = state.words[newWordIndex].back;
-          return {...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord };
+          return {...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord, flipped: false };
       }
     case 'INITIALIZE_CARDS':
        let initialWords = action.payload;
        let initialFrontWord = initialWords[0].front;
        let initialBackWord = initialWords[0].back;
        return {...state, words: initialWords, frontWord: initialFrontWord, backWord: initialBackWord};
+    case 'FLIP':
+      let newFlipped = !state.flipped;
+      return {...state, flipped: newFlipped};
     default:
       throw new Error("reducer error");
   }
 }
 
 export default function App() {
-
 
     useEffect(() => {
         axios.get('/cards.json')
@@ -56,21 +58,7 @@ export default function App() {
         });
     }, []);
 
-    // const [cards, setCards] = useState([]);
-    // const [frontOfCard, setFrontOfCard] = useState("");
-    // const [backOfCafrd, setBackOfCard] = useState("");
-
-    // const words = [{front: "a, an", back: "apple"}, 
-    //                 {front: "about", back: "banana"},
-    //                 {front: "above", back: "cranberry"},
-    //                 {front: "across", back: "durian"}, 
-    //                 {front: "after", back: "egg"}, 
-    //                 {front: "again", back: "banana"}];
-
-    // let frontWord = words[0].front;
-    // let backWord = words[0].back;
-
-    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words: [], frontWord: "", backWord: ""});
+    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words: [], frontWord: "", backWord: "", flipped: false});
 
     if (!state.words) {
         return false;
@@ -81,8 +69,8 @@ export default function App() {
             <Navbar />
             <Context.Provider value={dispatch}>
                 <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-                    <Card frontWord={state.frontWord} backWord={state.backWord} />
-                    <Controls />
+                    <Card frontWord={state.frontWord} backWord={state.backWord} flipped={state.flipped}/>
+                    <Controls/>
                 </Box>
             </Context.Provider>
         </>
