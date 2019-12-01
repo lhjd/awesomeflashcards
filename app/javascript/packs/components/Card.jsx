@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 import styles from './Card.module.scss';
 import classnames from 'classnames';
 import { Context } from '../App';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     width: "200px",
     height: "200px",
     borderRadius: "20px",
-    // background: 'red'
   },
 
   back: {
@@ -49,6 +50,11 @@ export default function Card(props) {
     dispatch({ type: "FLIP" });
   }
 
+  const handleLike = (event) => {
+    console.log("like it!!");
+    event.stopPropagation();
+  }
+
   return (
 
     <Box className={styles.flipCard} onClick={handleClick}>
@@ -65,6 +71,12 @@ export default function Card(props) {
             <Typography variant="h5" component="h3">
               {backWord}
             </Typography>
+            <IconButton onClick={handleLike}>
+              <Icon>thumb_up</Icon>
+            </IconButton>
+            <IconButton onClick={handleLike}>
+              <Icon>thumb_down</Icon>
+            </IconButton>
           </Paper>          
         </Box>
       </Box>
