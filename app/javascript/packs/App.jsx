@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Card from './components/Card';
 import Controls from './components/Controls';
@@ -32,6 +32,8 @@ const reducer = (state, action) => {
 }
 
 export default function App() {
+
+    useEffect(() => console.log('mounted'), []);
 
     const words = [{front: "a, an", back: "apple"}, 
                     {front: "about", back: "banana"},
