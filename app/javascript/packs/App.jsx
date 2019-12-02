@@ -40,26 +40,35 @@ const reducer = (state, action) => {
       let newProgress = state.progress + 1;
       return { ...state, progress: newProgress };
     case 'CHECK_ANSWER':
-      let submittedAnswer = action.payload;
+      let submittedAnswer = action.payload.choice;
       let correctAnswer = state.words[state.questionIndex].back;
       if (submittedAnswer === correctAnswer) {
         console.log("*** CORRECT ANSWER! ***");
+        console.log("*** action.payload.choiceIndex ***", action.payload.choiceIndex);
         let newProgress = state.progress + 1;
         let newWordIndex = state.wordIndex + 1;
         let newQuestionIndex = state.questionIndex + 1;
         let newFrontWord = state.words[newWordIndex].front;
         let newBackWord = state.words[newWordIndex].back;
-        return { ...state, 
-                wordIndex: newWordIndex, 
-                frontWord: newFrontWord, 
-                backWord: newBackWord, 
-                flipped: false,
-                progress: newProgress,
-                questionIndex: newQuestionIndex };
+        let newChoiceBtnColor = state.choiceBtnColor;
+        newChoiceBtnColor[action.payload.choiceIndex] = 'primary';
+        return {
+          ...state,
+          wordIndex: newWordIndex,
+          frontWord: newFrontWord,
+          backWord: newBackWord,
+          flipped: false,
+          progress: newProgress,
+          questionIndex: newQuestionIndex,
+          choiceBtnColor: newChoiceBtnColor
+        };
 
       } else {
         console.log("*** WRONG ANSWER! ***")
-        return state;
+        console.log("*** action.payload.choiceIndex ***", action.payload.choiceIndex);
+        let newChoiceBtnColor = state.choiceBtnColor;
+        newChoiceBtnColor[action.payload.choiceIndex] = 'default';
+        return {...state, choiceBtnColor: newChoiceBtnColor};
       }
     default:
       throw new Error(":( Action Type not found!");
@@ -84,15 +93,17 @@ export default function App() {
   }, []);
 
   const [state, dispatch] = useReducer(reducer,
-    { wordIndex: 0, 
-      words: [], 
-      frontWord: "", 
-      backWord: "", 
-      flipped: false, 
-      progress: 0, 
+    {
+      wordIndex: 0,
+      words: [],
+      frontWord: "",
+      backWord: "",
+      flipped: false,
+      progress: 0,
       questionIndex: 0,
+      choiceBtnColor: ["secondary", "secondary", "secondary"],
     });
-  
+
   if (!state.words) {
     return false;
   } else {
@@ -101,16 +112,17 @@ export default function App() {
       <>
         <Navbar />
         <Context.Provider value={dispatch}>
-          { state.progress % 4 === 0 && state.progress !== 0 ? 
-            <Quiz 
+          {state.progress % 4 === 0 && state.progress !== 0 ?
+            <Quiz
               questionIndex={state.questionIndex}
               words={state.words}
               answerIsCorrect={state.answerIsCorrect}
-              /> :
+              choiceBtnColor={state.choiceBtnColor}
+            /> :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-              <Card 
-                frontWord={state.frontWord} 
-                backWord={state.backWord} 
+              <Card
+                frontWord={state.frontWord}
+                backWord={state.backWord}
                 flipped={state.flipped}
                 flippable={true} />
               <Controls />

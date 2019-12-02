@@ -19,7 +19,9 @@ export default function Choice(props) {
     const dispatch = useContext(Context);
     
     const handleClick = () => {
-        dispatch({type: 'CHECK_ANSWER', payload: props.choice});
+        dispatch({type: 'CHECK_ANSWER', 
+                  payload: {choice: props.choice,
+                            choiceIndex: props.choiceIndex}});
     }
 
     return (
@@ -29,7 +31,7 @@ export default function Choice(props) {
                 color={props.color} 
                 onClick={handleClick}
                 >
-            {props.choice}
+              {props.choice}
             </Button>
         </Box>
     );
