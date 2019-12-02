@@ -95,7 +95,11 @@ export default function App() {
               words={state.words}
               /> :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-              <Card frontWord={state.frontWord} backWord={state.backWord} flipped={state.flipped} />
+              <Card 
+                frontWord={state.frontWord} 
+                backWord={state.backWord} 
+                flipped={state.flipped}
+                flippable={true} />
               <Controls />
             </Box>
           }

@@ -29,7 +29,7 @@ export default function Card(props) {
 
   const dispatch = useContext(Context);
 
-  let {frontWord, backWord, flipped} = props;
+  let {frontWord, backWord, flipped, flippable} = props;
 
   const classes = useStyles();
 
@@ -46,8 +46,10 @@ export default function Card(props) {
   );
 
 
-  const handleClick = () => {
-    dispatch({ type: "FLIP" });
+  const handleClick = (flippable) => {
+      if (flippable) {
+        dispatch({ type: "FLIP" });
+      }
   }
 
   const handleLike = (event) => {
@@ -57,7 +59,7 @@ export default function Card(props) {
 
   return (
 
-    <Box className={styles.flipCard} onClick={handleClick}>
+    <Box className={styles.flipCard} onClick={ () => handleClick(flippable)}>
       <Box className={flipCardInner}>
         <Box className={styles.flipCardFront}>
           <Paper className={classes.root} elevation={24}>

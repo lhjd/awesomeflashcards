@@ -13,12 +13,10 @@ const useStyles = makeStyles(theme => ({
   
 export default function Choice(props) {
 
-    console.log("*** props.choices ***", props.choices);
-    
     const classes = useStyles();
 
     const handleClick = () => {
-        console.log("choice clicked!!")
+        console.log("choice clicked!!");
     }
 
     return (
