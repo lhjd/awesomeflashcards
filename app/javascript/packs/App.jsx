@@ -7,6 +7,7 @@ import axios from 'axios';
 import Quiz from './components/Quiz';
 import { Line } from 'rc-progress';
 import Congrats from './components/Congrats';
+import Monster from './components/Monster';
 
 export const Context = React.createContext(null);
 
@@ -162,17 +163,22 @@ export default function App() {
           {
           state.endOfQuiz
           ? 
-          <Congrats />
+          <>
+            <Congrats />
+          </>
           :
           (state.progress % 4 === 0 && state.progress !== 0
             ?
-            <Quiz
-              questionIndex={state.questionIndex}
-              words={state.words}
-              answerIsCorrect={state.answerIsCorrect}
-              choiceBtnColor={state.choiceBtnColor}
-              choiceDisabled={state.choiceDisabled}
-            /> 
+            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+              <Quiz
+                questionIndex={state.questionIndex}
+                words={state.words}
+                answerIsCorrect={state.answerIsCorrect}
+                choiceBtnColor={state.choiceBtnColor}
+                choiceDisabled={state.choiceDisabled}
+              />
+              <Monster wrongAnswer={state.choiceDisabled}/>
+            </Box>
             :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
               <Card
