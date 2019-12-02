@@ -62,23 +62,18 @@ export default function App() {
   }, []);
 
   const [state, dispatch] = useReducer(reducer,
-    { wordIndex: 0, words: [], frontWord: "", backWord: "", flipped: false, progress: 0 });
-
+    { wordIndex: 0, words: [], frontWord: "", backWord: "", flipped: false, progress: 0, questionIndex: 0 });
+  
   if (!state.words) {
     return false;
   } else {
-
-    console.log("*** state.progress ***", state.progress);
-    if (state.progress % 3 === 0 && state.progress !== 0) {
-      console.log("*** quiz time! ***");
-    }
 
     return (
       <>
         <Navbar />
         <Context.Provider value={dispatch}>
           { state.progress % 3 === 0 && state.progress !== 0 ? 
-            <Quiz /> :  
+            <Quiz question={state.words[state.questionIndex].front} /> :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
               <Card frontWord={state.frontWord} backWord={state.backWord} flipped={state.flipped} />
               <Controls />
