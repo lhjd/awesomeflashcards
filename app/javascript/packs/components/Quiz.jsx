@@ -55,7 +55,9 @@ export default function Quiz(props) {
     let choice2 = words[randomWordIndex1].back;
     let choice3 = words[randomWordIndex2].back;
 
-    const [choices, setChoices] = useState([choice1, choice2, choice3]);
+    let shuffledChoices = shuffle([choice1, choice2, choice3]);
+
+    const [choices] = useState(shuffledChoices);
     
     return (
         <>
