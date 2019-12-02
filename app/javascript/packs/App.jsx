@@ -53,7 +53,7 @@ const reducer = (state, action) => {
           let newProgress = state.progress + 1;
           let newWordIndex = state.wordIndex;
           let newQuestionIndex = state.questionIndex + 1;
-          let newPercentComplete = newQuestionIndex / (state.words.length - 1) * 100;
+          let newPercentComplete = newQuestionIndex / (state.words.length) * 100;
           let newFrontWord = state.words[newWordIndex].front;
           let newBackWord = state.words[newWordIndex].back;
           let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
@@ -93,7 +93,8 @@ const reducer = (state, action) => {
             progress: newProgress,
             choiceBtnColor: newChoiceBtnColor,
             choiceDisabled: newChoiceDisabled,
-            endOfQuiz: true
+            endOfQuiz: true,
+            percentComplete: 100
           };
         } else {
           let newChoiceBtnColor = state.choiceBtnColor;
@@ -146,14 +147,11 @@ export default function App() {
   if (!state.words) {
     return false;
   } else {
-    // console.log("*** rendering ***");
-    // console.log("*** state.wordIndex ***", state.wordIndex);  
     return (
       <>
         <Navbar />
         <Box 
         m={2}
-        // display="flex" flexDirection="column" justifyContent="center" alignItems="center"
         >
         <Line 
         percent={state.percentComplete}
