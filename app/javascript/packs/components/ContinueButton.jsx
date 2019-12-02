@@ -19,7 +19,7 @@ export default function ContainedButtons() {
   const handleClick = () => {
         dispatch({ type: "NEXT_WORD" });
         dispatch({ type: "PROGRESS" });
-}
+  }
   
 
   return (

@@ -68,7 +68,7 @@ export default function Quiz(props) {
                 frontWord={words[questionIndex].front} 
                 backWord="nil" 
                 flipped={false}
-                flippable={false} />                
+                flippable={false} />
             { choices.map((choice,index) => (
                 <Choice choice={choice} key={index}/>
             ))}

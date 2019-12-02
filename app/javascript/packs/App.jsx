@@ -39,8 +39,15 @@ const reducer = (state, action) => {
     case 'PROGRESS':
       let newProgress = state.progress + 1;
       return { ...state, progress: newProgress };
+    case 'CHECK_ANSWER':
+      let submittedAnswer = action.payload;
+      let correctAnswer = state.words[state.questionIndex].back;
+      if (submittedAnswer === correctAnswer) {
+        console.log("*** YOUR ANSWER IS CORRECT!!!!****");
+      }
+      return state;
     default:
-      throw new Error("reducer error");
+      throw new Error(":( Action Type not found!");
   }
 }
 
