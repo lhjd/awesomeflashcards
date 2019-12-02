@@ -22,7 +22,7 @@ export default function Choice(props) {
     }
 
     return (
-        <Button variant="contained" color="primary" onClick={handleClick}>
+        <Button variant="contained" color={props.color} onClick={handleClick}>
           {props.choice}
         </Button>
     );

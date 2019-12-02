@@ -50,7 +50,7 @@ export default function Quiz(props) {
 
     while (randomWordIndex1 === questionIndex || randomWordIndex2 === questionIndex) {
         randomWordIndex1 = getRandomInt(0, words.length - 1);
-        grandomWordIndex2 = getRandomInt(0, words.length - 1);    
+        randomWordIndex2 = getRandomInt(0, words.length - 1);    
     }
 
     let choice2 = words[randomWordIndex1].back;
@@ -70,7 +70,10 @@ export default function Quiz(props) {
                 flipped={false}
                 flippable={false} />
             { choices.map((choice,index) => (
-                <Choice choice={choice} key={index}/>
+                <Choice 
+                    choice={choice} 
+                    key={index} 
+                    color="secondary" />
             ))}
         </>
     );

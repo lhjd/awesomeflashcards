@@ -43,9 +43,24 @@ const reducer = (state, action) => {
       let submittedAnswer = action.payload;
       let correctAnswer = state.words[state.questionIndex].back;
       if (submittedAnswer === correctAnswer) {
-        console.log("*** YOUR ANSWER IS CORRECT!!!!****");
+        console.log("*** CORRECT ANSWER! ***");
+        let newProgress = state.progress + 1;
+        let newWordIndex = state.wordIndex + 1;
+        let newQuestionIndex = state.questionIndex + 1;
+        let newFrontWord = state.words[newWordIndex].front;
+        let newBackWord = state.words[newWordIndex].back;
+        return { ...state, 
+                wordIndex: newWordIndex, 
+                frontWord: newFrontWord, 
+                backWord: newBackWord, 
+                flipped: false,
+                progress: newProgress,
+                questionIndex: newQuestionIndex };
+
+      } else {
+        console.log("*** WRONG ANSWER! ***")
+        return state;
       }
-      return state;
     default:
       throw new Error(":( Action Type not found!");
   }
@@ -75,22 +90,12 @@ export default function App() {
       backWord: "", 
       flipped: false, 
       progress: 0, 
-      questionIndex: 0 });
+      questionIndex: 0,
+    });
   
   if (!state.words) {
     return false;
   } else {
-
-    // if (state.progress % 3 === 0 && state.progress !== 0) {
-    //   let choices = [];
-    //   let currentProgress = state.progress;
-    //   let words = state.words;
-    //   choices.push(words[currentProgress - 3]);
-    //   choices.push(words[currentProgress - 2]);
-    //   choices.push(words[currentProgress - 1]);
-    //   let shuffledChoices = shuffle(choices);
-    //   console.log("*** shuffledChoices ***", shuffledChoices);
-    // }
 
     return (
       <>
@@ -100,6 +105,7 @@ export default function App() {
             <Quiz 
               questionIndex={state.questionIndex}
               words={state.words}
+              answerIsCorrect={state.answerIsCorrect}
               /> :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
               <Card 
