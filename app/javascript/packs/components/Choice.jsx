@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from '../App';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,9 +23,15 @@ export default function Choice(props) {
     }
 
     return (
-        <Button variant="contained" color={props.color} onClick={handleClick}>
-          {props.choice}
-        </Button>
+        <Box m={1}>
+            <Button 
+                variant="contained" 
+                color={props.color} 
+                onClick={handleClick}
+                >
+            {props.choice}
+            </Button>
+        </Box>
     );
 
 

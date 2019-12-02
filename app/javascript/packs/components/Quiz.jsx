@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './Card';
 import Choice from './Choice';
+import Box from '@material-ui/core/Box';
 
 
 // https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
@@ -63,18 +64,21 @@ export default function Quiz(props) {
 
     return (
         <>
-            <h1>Quiz</h1>
-            <Card 
-                frontWord={words[questionIndex].front} 
-                backWord="nil" 
-                flipped={false}
-                flippable={false} />
-            { choices.map((choice,index) => (
-                <Choice 
-                    choice={choice} 
-                    key={index} 
-                    color="secondary" />
-            ))}
+            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+                <Card 
+                    frontWord={words[questionIndex].front} 
+                    backWord="nil" 
+                    flipped={false}
+                    flippable={false} />
+                { choices.map((choice,index) => (
+                    <Choice 
+                        choice={choice} 
+                        key={index} 
+                        color="secondary" 
+                        />
+                ))}
+            </Box>
+
         </>
     );
 

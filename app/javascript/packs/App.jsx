@@ -101,7 +101,7 @@ export default function App() {
       <>
         <Navbar />
         <Context.Provider value={dispatch}>
-          { state.progress % 3 === 0 && state.progress !== 0 ? 
+          { state.progress % 4 === 0 && state.progress !== 0 ? 
             <Quiz 
               questionIndex={state.questionIndex}
               words={state.words}
