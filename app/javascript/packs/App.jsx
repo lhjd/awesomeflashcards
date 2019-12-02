@@ -5,6 +5,7 @@ import Controls from './components/Controls';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import Quiz from './components/Quiz';
+import { Line } from 'rc-progress';
 
 export const Context = React.createContext(null);
 
@@ -45,7 +46,6 @@ const reducer = (state, action) => {
       let newProgress = state.progress + 1;
       return { ...state, progress: newProgress };
     case 'CHECK_ANSWER':
-      console.log("*** state.questionIndex ***", state.questionIndex);
       if (state.questionIndex < state.words.length -1 ) {
         let submittedAnswer = action.payload.choice;
         let correctAnswer = state.words[state.questionIndex].back;
@@ -53,6 +53,7 @@ const reducer = (state, action) => {
           let newProgress = state.progress + 1;
           let newWordIndex = state.wordIndex;
           let newQuestionIndex = state.questionIndex + 1;
+          let newPercentComplete = newQuestionIndex / (state.words.length - 1) * 100;
           let newFrontWord = state.words[newWordIndex].front;
           let newBackWord = state.words[newWordIndex].back;
           let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
@@ -66,7 +67,8 @@ const reducer = (state, action) => {
             progress: newProgress,
             questionIndex: newQuestionIndex,
             choiceBtnColor: newChoiceBtnColor,
-            choiceDisabled: newChoiceDisabled
+            choiceDisabled: newChoiceDisabled,
+            percentComplete: newPercentComplete,
           };
         } else {
           let newChoiceBtnColor = state.choiceBtnColor;
@@ -137,7 +139,8 @@ export default function App() {
       questionIndex: 0,
       choiceBtnColor: ["secondary", "secondary", "secondary"],
       choiceDisabled: [false, false, false],
-      endOfQuiz: false
+      endOfQuiz: false,
+      percentComplete: 0
     });
 
   if (!state.words) {
@@ -148,6 +151,14 @@ export default function App() {
     return (
       <>
         <Navbar />
+        <Box 
+        m={2}
+        // display="flex" flexDirection="column" justifyContent="center" alignItems="center"
+        >
+        <Line 
+        percent={state.percentComplete}
+        strokeWidth="1" strokeColor="#2ecc71" />
+        </Box>
         <Context.Provider value={dispatch}>
           {
           state.endOfQuiz
