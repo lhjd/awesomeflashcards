@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import Quiz from './components/Quiz';
 import { Line } from 'rc-progress';
+import Congrats from './components/Congrats';
 
 export const Context = React.createContext(null);
 
@@ -161,7 +162,7 @@ export default function App() {
           {
           state.endOfQuiz
           ? 
-          <div>End of Quiz </div>
+          <Congrats />
           :
           (state.progress % 4 === 0 && state.progress !== 0
             ?
