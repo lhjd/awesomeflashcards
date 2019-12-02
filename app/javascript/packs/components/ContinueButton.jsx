@@ -14,11 +14,11 @@ const useStyles = makeStyles(theme => ({
 export default function ContainedButtons() {
   const classes = useStyles();
 
-
   const dispatch = useContext(Context);
 
   const handleClick = () => {
         dispatch({ type: "NEXT_WORD" });
+        dispatch({ type: "PROGRESS" });
 }
   
 

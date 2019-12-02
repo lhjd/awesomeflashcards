@@ -36,6 +36,9 @@ const reducer = (state, action) => {
     case 'FLIP':
       let newFlipped = !state.flipped;
       return {...state, flipped: newFlipped};
+    case 'PROGRESS':
+      let newProgress = state.progress + 1;
+      return {...state, progress: newProgress};
     default:
       throw new Error("reducer error");
   }
@@ -58,7 +61,8 @@ export default function App() {
         });
     }, []);
 
-    const [state, dispatch] = useReducer(reducer, { wordIndex: 0, words: [], frontWord: "", backWord: "", flipped: false});
+    const [state, dispatch] = useReducer(reducer, 
+      { wordIndex: 0, words: [], frontWord: "", backWord: "", flipped: false, progress: 0});
 
     if (!state.words) {
         return false;
