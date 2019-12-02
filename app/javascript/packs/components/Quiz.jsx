@@ -40,8 +40,8 @@ const shuffle = (array) => {
 
 export default function Quiz(props) {
 
-    let { words, questionIndex, choiceBtnColor } = props;
-
+    let { words, questionIndex, choiceBtnColor, choiceDisabled } = props;
+    
     let choice1 = words[questionIndex].back; //this is the correct choice
 
     let randomWordIndex1 = getRandomInt(0, words.length - 1);
@@ -56,7 +56,7 @@ export default function Quiz(props) {
     let choice3 = words[randomWordIndex2].back;
 
     const [choices, setChoices] = useState([choice1, choice2, choice3]);
-
+    
     return (
         <>
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -70,18 +70,21 @@ export default function Quiz(props) {
                     choiceIndex={0}
                     key={0}
                     color={choiceBtnColor[0]}
+                    disabled={choiceDisabled[0]}
                 />
                 <Choice
                     choice={choices[1]}
                     choiceIndex={1}
                     key={1}
                     color={choiceBtnColor[1]}
+                    disabled={choiceDisabled[1]}
                 />
                 <Choice
                     choice={choices[2]}
                     choiceIndex={2}
                     key={2}
                     color={choiceBtnColor[2]}
+                    disabled={choiceDisabled[2]}
                 />
             </Box>
 

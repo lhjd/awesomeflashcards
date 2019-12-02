@@ -30,6 +30,7 @@ export default function Choice(props) {
                 variant="contained" 
                 color={props.color} 
                 onClick={handleClick}
+                disabled={props.disabled}
                 >
               {props.choice}
             </Button>

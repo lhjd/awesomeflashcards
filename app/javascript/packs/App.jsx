@@ -43,8 +43,6 @@ const reducer = (state, action) => {
       let submittedAnswer = action.payload.choice;
       let correctAnswer = state.words[state.questionIndex].back;
       if (submittedAnswer === correctAnswer) {
-        console.log("*** CORRECT ANSWER! ***");
-        console.log("*** action.payload.choiceIndex ***", action.payload.choiceIndex);
         let newProgress = state.progress + 1;
         let newWordIndex = state.wordIndex + 1;
         let newQuestionIndex = state.questionIndex + 1;
@@ -60,15 +58,18 @@ const reducer = (state, action) => {
           flipped: false,
           progress: newProgress,
           questionIndex: newQuestionIndex,
-          choiceBtnColor: newChoiceBtnColor
+          choiceBtnColor: newChoiceBtnColor,
         };
 
       } else {
-        console.log("*** WRONG ANSWER! ***")
-        console.log("*** action.payload.choiceIndex ***", action.payload.choiceIndex);
         let newChoiceBtnColor = state.choiceBtnColor;
         newChoiceBtnColor[action.payload.choiceIndex] = 'default';
-        return {...state, choiceBtnColor: newChoiceBtnColor};
+        let newChoiceDisabled = state.choiceDisabled;
+        newChoiceDisabled[action.payload.choiceIndex] = true;
+        return {...state, 
+                choiceBtnColor: newChoiceBtnColor,
+                choiceDisabled: newChoiceDisabled
+              };
       }
     default:
       throw new Error(":( Action Type not found!");
@@ -102,6 +103,7 @@ export default function App() {
       progress: 0,
       questionIndex: 0,
       choiceBtnColor: ["secondary", "secondary", "secondary"],
+      choiceDisabled: [false, false, false]
     });
 
   if (!state.words) {
@@ -118,6 +120,7 @@ export default function App() {
               words={state.words}
               answerIsCorrect={state.answerIsCorrect}
               choiceBtnColor={state.choiceBtnColor}
+              choiceDisabled={state.choiceDisabled}
             /> :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
               <Card
