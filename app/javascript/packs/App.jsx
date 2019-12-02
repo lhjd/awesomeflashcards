@@ -48,8 +48,8 @@ const reducer = (state, action) => {
         let newQuestionIndex = state.questionIndex + 1;
         let newFrontWord = state.words[newWordIndex].front;
         let newBackWord = state.words[newWordIndex].back;
-        let newChoiceBtnColor = state.choiceBtnColor;
-        newChoiceBtnColor[action.payload.choiceIndex] = 'primary';
+        let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
+        let newChoiceDisabled = [false, false, false];
         return {
           ...state,
           wordIndex: newWordIndex,
@@ -59,6 +59,7 @@ const reducer = (state, action) => {
           progress: newProgress,
           questionIndex: newQuestionIndex,
           choiceBtnColor: newChoiceBtnColor,
+          choiceDisabled: newChoiceDisabled
         };
 
       } else {
