@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ContainedButtons() {
+export default function ContinueButton() {
   const classes = useStyles();
 
   const dispatch = useContext(Context);

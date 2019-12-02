@@ -17,7 +17,12 @@ const reducer = (state, action) => {
         let newBackWord = state.words[newWordIndex].back;
         return { ...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord, flipped: false };
       } else {
-        return state;
+        let newFrontWord = state.words[0].front;
+        let newBackWord = state.words[0].back;
+        return {...state, 
+                wordIndex: 0,
+                frontWord: newFrontWord,
+                backWord: newBackWord};
       }
     case 'PREVIOUS_WORD':
       if (state.wordIndex === 0) {
@@ -40,37 +45,64 @@ const reducer = (state, action) => {
       let newProgress = state.progress + 1;
       return { ...state, progress: newProgress };
     case 'CHECK_ANSWER':
-      let submittedAnswer = action.payload.choice;
-      let correctAnswer = state.words[state.questionIndex].back;
-      if (submittedAnswer === correctAnswer) {
-        let newProgress = state.progress + 1;
-        let newWordIndex = state.wordIndex + 1;
-        let newQuestionIndex = state.questionIndex + 1;
-        let newFrontWord = state.words[newWordIndex].front;
-        let newBackWord = state.words[newWordIndex].back;
-        let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
-        let newChoiceDisabled = [false, false, false];
-        return {
-          ...state,
-          wordIndex: newWordIndex,
-          frontWord: newFrontWord,
-          backWord: newBackWord,
-          flipped: false,
-          progress: newProgress,
-          questionIndex: newQuestionIndex,
-          choiceBtnColor: newChoiceBtnColor,
-          choiceDisabled: newChoiceDisabled
-        };
-
+      console.log("*** state.questionIndex ***", state.questionIndex);
+      if (state.questionIndex < state.words.length -1 ) {
+        let submittedAnswer = action.payload.choice;
+        let correctAnswer = state.words[state.questionIndex].back;
+        if (submittedAnswer === correctAnswer) {
+          let newProgress = state.progress + 1;
+          let newWordIndex = state.wordIndex;
+          let newQuestionIndex = state.questionIndex + 1;
+          let newFrontWord = state.words[newWordIndex].front;
+          let newBackWord = state.words[newWordIndex].back;
+          let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
+          let newChoiceDisabled = [false, false, false];
+          return {
+            ...state,
+            wordIndex: newWordIndex,
+            frontWord: newFrontWord,
+            backWord: newBackWord,
+            flipped: false,
+            progress: newProgress,
+            questionIndex: newQuestionIndex,
+            choiceBtnColor: newChoiceBtnColor,
+            choiceDisabled: newChoiceDisabled
+          };
+        } else {
+          let newChoiceBtnColor = state.choiceBtnColor;
+          newChoiceBtnColor[action.payload.choiceIndex] = 'default';
+          let newChoiceDisabled = state.choiceDisabled;
+          newChoiceDisabled[action.payload.choiceIndex] = true;
+          return {...state, 
+                  choiceBtnColor: newChoiceBtnColor,
+                  choiceDisabled: newChoiceDisabled
+                };
+        }
       } else {
-        let newChoiceBtnColor = state.choiceBtnColor;
-        newChoiceBtnColor[action.payload.choiceIndex] = 'default';
-        let newChoiceDisabled = state.choiceDisabled;
-        newChoiceDisabled[action.payload.choiceIndex] = true;
-        return {...state, 
-                choiceBtnColor: newChoiceBtnColor,
-                choiceDisabled: newChoiceDisabled
-              };
+        let submittedAnswer = action.payload.choice;
+        let correctAnswer = state.words[state.questionIndex].back;
+        if (submittedAnswer === correctAnswer) {
+          let newProgress = state.progress + 1;
+          let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
+          let newChoiceDisabled = [false, false, false];
+          console.log("*** END OF QUIZ! ***");
+          return {
+            ...state,
+            progress: newProgress,
+            choiceBtnColor: newChoiceBtnColor,
+            choiceDisabled: newChoiceDisabled,
+            endOfQuiz: true
+          };
+        } else {
+          let newChoiceBtnColor = state.choiceBtnColor;
+          newChoiceBtnColor[action.payload.choiceIndex] = 'default';
+          let newChoiceDisabled = state.choiceDisabled;
+          newChoiceDisabled[action.payload.choiceIndex] = true;
+          return {...state, 
+                  choiceBtnColor: newChoiceBtnColor,
+                  choiceDisabled: newChoiceDisabled
+                };
+        }
       }
     default:
       throw new Error(":( Action Type not found!");
@@ -104,25 +136,34 @@ export default function App() {
       progress: 0,
       questionIndex: 0,
       choiceBtnColor: ["secondary", "secondary", "secondary"],
-      choiceDisabled: [false, false, false]
+      choiceDisabled: [false, false, false],
+      endOfQuiz: false
     });
 
   if (!state.words) {
     return false;
   } else {
-
+    // console.log("*** rendering ***");
+    // console.log("*** state.wordIndex ***", state.wordIndex);  
     return (
       <>
         <Navbar />
         <Context.Provider value={dispatch}>
-          {state.progress % 4 === 0 && state.progress !== 0 ?
+          {
+          state.endOfQuiz
+          ? 
+          <div>End of Quiz </div>
+          :
+          (state.progress % 4 === 0 && state.progress !== 0
+            ?
             <Quiz
               questionIndex={state.questionIndex}
               words={state.words}
               answerIsCorrect={state.answerIsCorrect}
               choiceBtnColor={state.choiceBtnColor}
               choiceDisabled={state.choiceDisabled}
-            /> :
+            /> 
+            :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
               <Card
                 frontWord={state.frontWord}
@@ -130,7 +171,7 @@ export default function App() {
                 flipped={state.flipped}
                 flippable={true} />
               <Controls />
-            </Box>
+            </Box>)
           }
         </Context.Provider>
       </>
