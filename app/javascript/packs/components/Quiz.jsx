@@ -47,7 +47,7 @@ export default function Quiz(props) {
     let randomWordIndex1 = getRandomInt(0, words.length - 1);
     let randomWordIndex2 = getRandomInt(0, words.length - 1);
 
-    while (randomWordIndex1 === questionIndex || randomWordIndex2 === questionIndex || randomWordIndex === randomWordIndex2) {
+    while (randomWordIndex1 === questionIndex || randomWordIndex2 === questionIndex || randomWordIndex1 === randomWordIndex2) {
         randomWordIndex1 = getRandomInt(0, words.length - 1);
         randomWordIndex2 = getRandomInt(0, words.length - 1);
     }
