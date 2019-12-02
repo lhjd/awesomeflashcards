@@ -62,18 +62,38 @@ export default function App() {
   }, []);
 
   const [state, dispatch] = useReducer(reducer,
-    { wordIndex: 0, words: [], frontWord: "", backWord: "", flipped: false, progress: 0, questionIndex: 0 });
+    { wordIndex: 0, 
+      words: [], 
+      frontWord: "", 
+      backWord: "", 
+      flipped: false, 
+      progress: 0, 
+      questionIndex: 0 });
   
   if (!state.words) {
     return false;
   } else {
+
+    // if (state.progress % 3 === 0 && state.progress !== 0) {
+    //   let choices = [];
+    //   let currentProgress = state.progress;
+    //   let words = state.words;
+    //   choices.push(words[currentProgress - 3]);
+    //   choices.push(words[currentProgress - 2]);
+    //   choices.push(words[currentProgress - 1]);
+    //   let shuffledChoices = shuffle(choices);
+    //   console.log("*** shuffledChoices ***", shuffledChoices);
+    // }
 
     return (
       <>
         <Navbar />
         <Context.Provider value={dispatch}>
           { state.progress % 3 === 0 && state.progress !== 0 ? 
-            <Quiz question={state.words[state.questionIndex].front} /> :
+            <Quiz 
+              questionIndex={state.questionIndex}
+              words={state.words}
+              /> :
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
               <Card frontWord={state.frontWord} backWord={state.backWord} flipped={state.flipped} />
               <Controls />
