@@ -14,24 +14,63 @@ export const Context = React.createContext(null);
 const reducer = (state, action) => {
   switch (action.type) {
     case 'NEXT_WORD':
+
       if (state.wordIndex < state.words.length - 1) {
         let newWordIndex = state.wordIndex + 1;
         let newFrontWord = state.words[newWordIndex].front;
         let newBackWord = state.words[newWordIndex].back;
         let newWordId = state.words[newWordIndex].id;
-        return { ...state, 
-                wordIndex: newWordIndex, 
-                frontWord: newFrontWord, 
-                backWord: newBackWord, 
-                wordId: newWordId,
-                flipped: false };
+
+        let apple = state.savedWords.find(word => word.id === newWordId);   
+
+        if (apple) {
+          let niceIsEasy = apple.isEasy;
+          let niceIsHard = apple.isHard;
+
+          return { ...state, 
+                  wordIndex: newWordIndex, 
+                  frontWord: newFrontWord, 
+                  backWord: newBackWord, 
+                  wordId: newWordId,
+                  flipped: false,
+                  isEasy: niceIsEasy,
+                  isHard: niceIsHard };
+        } else {
+          console.log("*** no saved words!!! ***");
+          return { ...state, 
+            wordIndex: newWordIndex, 
+            frontWord: newFrontWord, 
+            backWord: newBackWord, 
+            wordId: newWordId,
+            flipped: false,
+            isEasy: false,
+            isHard: false };
+        }
+
       } else {
         let newFrontWord = state.words[0].front;
         let newBackWord = state.words[0].back;
+        let newWordId = state.words[0].id;
+
+        let apple = state.savedWords.find(word => word.id === newWordId);   
+
+        if (apple) {
+          let niceIsEasy = apple.isEasy;
+          let niceIsHard = apple.isHard;
+
         return {...state, 
                 wordIndex: 0,
                 frontWord: newFrontWord,
-                backWord: newBackWord};
+                backWord: newBackWord,
+                isEasy: niceIsEasy,
+                isHard: niceIsHard};
+        } else {
+          return {...state, 
+            wordIndex: 0,
+            frontWord: newFrontWord,
+            backWord: newBackWord
+            };
+        }
       }
     case 'PREVIOUS_WORD':
       if (state.wordIndex === 0) {
