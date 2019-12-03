@@ -33,7 +33,7 @@ export default function Card(props) {
   // const [isHard, setIsHard] = useState(false);
 
   // let {isEasy, isHard} = props;
-  console.log("*** props.savedWordId ***", props.savedWordId);
+  // console.log("*** props.savedWordId ***", props.savedWordId);
 
   let {frontWord, backWord, flipped, flippable} = props;
 
