@@ -40,7 +40,10 @@
     transform: rotateY(180deg);
 }
 
-.banana {
-    border: 1px solid red;
-    background-color: red;
+.isEasy {
+    color: green;
+}
+
+.isHard {
+    color: red;
 }

@@ -1,6 +1,6 @@
 class WordsController < ApplicationController
   before_action :set_word, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: []
+  before_action :authenticate_user!, only: [:index]
 
   # GET /words
   # GET /words.json
@@ -25,14 +25,37 @@ class WordsController < ApplicationController
   # POST /words
   # POST /words.json
   def create
-    @word = Word.new(word_params)
+    # @word = Word.new(word_params)
+    # respond_to do |format|
+    #   if @word.save
+    #     format.html { redirect_to @word, notice: 'Word was successfully created.' }
+    #     format.json { render :show, status: :created, location: @word }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @word.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
+    # byebug
+    cardId = request.params[:wordId]
+    easy = request.params[:easy]
+    hard = request.params[:hard]
+    card = Card.find_by(id: cardId)
+
+    params = {card: card, easy: easy, hard: hard}
+
+    @word = Word.find_or_create_by(card: card) do |word|
+      word.card = card
+      word.easy = easy
+      word.hard = hard
+      word.user = current_user
+    end
 
     respond_to do |format|
-      if @word.save
-        format.html { redirect_to @word, notice: 'Word was successfully created.' }
-        format.json { render :show, status: :created, location: @word }
+      if @word.update(params)
+        msg = { status: 'ok', message: 'Success!', word: @word}
+        format.json { render json: msg } # don't do msg.to_json
       else
-        format.html { render :new }
         format.json { render json: @word.errors, status: :unprocessable_entity }
       end
     end

@@ -18,7 +18,13 @@ const reducer = (state, action) => {
         let newWordIndex = state.wordIndex + 1;
         let newFrontWord = state.words[newWordIndex].front;
         let newBackWord = state.words[newWordIndex].back;
-        return { ...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord, flipped: false };
+        let newWordId = state.words[newWordIndex].id;
+        return { ...state, 
+                wordIndex: newWordIndex, 
+                frontWord: newFrontWord, 
+                backWord: newBackWord, 
+                wordId: newWordId,
+                flipped: false };
       } else {
         let newFrontWord = state.words[0].front;
         let newBackWord = state.words[0].back;
@@ -34,13 +40,24 @@ const reducer = (state, action) => {
         let newWordIndex = state.wordIndex - 1;
         let newFrontWord = state.words[newWordIndex].front;
         let newBackWord = state.words[newWordIndex].back;
-        return { ...state, wordIndex: newWordIndex, frontWord: newFrontWord, backWord: newBackWord, flipped: false };
+        let newWordId = state.words[newWordIndex].id;
+        return { ...state, 
+                wordIndex: newWordIndex, 
+                frontWord: newFrontWord, 
+                backWord: newBackWord, 
+                wordId: newWordId,
+                flipped: false };
       }
     case 'INITIALIZE_CARDS':
       let initialWords = action.payload;
       let initialFrontWord = initialWords[0].front;
       let initialBackWord = initialWords[0].back;
-      return { ...state, words: initialWords, frontWord: initialFrontWord, backWord: initialBackWord };
+      let initialWordId = initialWords[0].id;
+      return { ...state, 
+              words: initialWords, 
+              frontWord: initialFrontWord, 
+              backWord: initialBackWord,
+              wordId: initialWordId };
     case 'FLIP':
       let newFlipped = !state.flipped;
       return { ...state, flipped: newFlipped };
@@ -58,6 +75,7 @@ const reducer = (state, action) => {
           let newPercentComplete = newQuestionIndex / (state.words.length) * 100;
           let newFrontWord = state.words[newWordIndex].front;
           let newBackWord = state.words[newWordIndex].back;
+          let newWordId = state.words[newWordIndex].id;
           let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
           let newChoiceDisabled = [false, false, false];
           return {
@@ -65,6 +83,7 @@ const reducer = (state, action) => {
             wordIndex: newWordIndex,
             frontWord: newFrontWord,
             backWord: newBackWord,
+            wordId: newWordId,
             flipped: false,
             progress: newProgress,
             questionIndex: newQuestionIndex,
@@ -120,6 +139,7 @@ export default function App() {
     axios.get('/cards.json')
       .then(function (response) {
         // handle success
+        // console.log("*** response.data ***", response.data);
         dispatch({ type: 'INITIALIZE_CARDS', payload: response.data })
       })
       .catch(function (error) {
@@ -135,6 +155,7 @@ export default function App() {
     {
       wordIndex: 0,
       words: [],
+      wordId: null,
       frontWord: "",
       backWord: "",
       flipped: false,
@@ -149,6 +170,7 @@ export default function App() {
   if (!state.words) {
     return false;
   } else {
+    // console.log("*** state.words ***", state.words);
     return (
       <>
         <Navbar />
@@ -184,6 +206,7 @@ export default function App() {
               <Card
                 frontWord={state.frontWord}
                 backWord={state.backWord}
+                wordId={state.wordId}
                 flipped={state.flipped}
                 flippable={true} />
               <Controls />
