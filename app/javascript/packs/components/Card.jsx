@@ -33,6 +33,7 @@ export default function Card(props) {
   // const [isHard, setIsHard] = useState(false);
 
   // let {isEasy, isHard} = props;
+  console.log("*** props.savedWordId ***", props.savedWordId);
 
   let {frontWord, backWord, flipped, flippable} = props;
 
@@ -83,7 +84,8 @@ export default function Card(props) {
           word: props.backWord,
           easy: !props.isEasy,
           hard: false,
-          wordId: props.wordId
+          wordId: props.wordId,
+          savedWordId: props.savedWordId
         })
         .then(function (response) {
           dispatch({ type: "TOGGLE_EASY_HARD", payload: {isEasy: response.data.data.isEasy, isHard: response.data.data.isHard}});
@@ -101,7 +103,8 @@ export default function Card(props) {
           word: props.backWord,
           easy: false,
           hard: !props.isHard,
-          wordId: props.wordId
+          wordId: props.wordId,
+          savedWordId: props.savedWordId
         })
         .then(function (response) {
           // console.log(response);

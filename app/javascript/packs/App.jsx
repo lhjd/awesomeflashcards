@@ -26,6 +26,7 @@ const reducer = (state, action) => {
         if (apple) {
           let niceIsEasy = apple.isEasy;
           let niceIsHard = apple.isHard;
+          let niceSavedWordId = apple.id;
 
           return { ...state, 
                   wordIndex: newWordIndex, 
@@ -34,7 +35,8 @@ const reducer = (state, action) => {
                   wordId: newWordId,
                   flipped: false,
                   isEasy: niceIsEasy,
-                  isHard: niceIsHard };
+                  isHard: niceIsHard,
+                  savedWordId: niceSavedWordId};
         } else {
           console.log("*** no saved words!!! ***");
           return { ...state, 
@@ -44,7 +46,8 @@ const reducer = (state, action) => {
             wordId: newWordId,
             flipped: false,
             isEasy: false,
-            isHard: false };
+            isHard: false,
+            savedWordId: null };
         }
 
       } else {
@@ -57,13 +60,15 @@ const reducer = (state, action) => {
         if (apple) {
           let niceIsEasy = apple.isEasy;
           let niceIsHard = apple.isHard;
+          let niceSavedWordId = apple.id;
 
         return {...state, 
                 wordIndex: 0,
                 frontWord: newFrontWord,
                 backWord: newBackWord,
                 isEasy: niceIsEasy,
-                isHard: niceIsHard};
+                isHard: niceIsHard,
+                savedWordId: niceSavedWordId};
         } else {
           return {...state, 
             wordIndex: 0,
@@ -109,10 +114,12 @@ const reducer = (state, action) => {
           // console.log("*** banana ***", banana);
           let newIsEasy = banana.isEasy;
           let newIsHard = banana.isHard;
+          let newSavedWordId = banana.id;
           return { ...state, 
                   savedWords: initialSavedWords,
                   isEasy: newIsEasy,
-                  isHard: newIsHard};
+                  isHard: newIsHard,
+                  savedWordId: newSavedWordId};
         } else {
           return state;
         }
@@ -250,6 +257,7 @@ export default function App() {
       isEasy: false,
       isHard: false,
       savedWords: [],
+      savedWordId: null
     });
 
   if (!state.words) {
@@ -295,7 +303,8 @@ export default function App() {
                 wordId={state.wordId}
                 flipped={state.flipped}
                 flippable={true}
-                savedWords={state.savedWords} />
+                savedWords={state.savedWords}
+                savedWordId={state.savedWordId} />
               <Controls />
             </Box>)
           }

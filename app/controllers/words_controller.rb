@@ -37,13 +37,14 @@ class WordsController < ApplicationController
     isEasy = request.params[:easy]
     isHard = request.params[:hard]
     cardId = request.params[:wordId]
+    id = request.params[:savedWordId]
     card = Card.find_by(id: cardId)
 
     params = {isEasy: isEasy, isHard: isHard, card: card, user: current_user}
     # @word = Word.create(params)
     # @word.save
 
-    @word = Word.find_or_create_by(card: card) do |word|
+    @word = Word.find_or_create_by(id: id) do |word|
       word.isEasy = isEasy
       word.isHard = isHard
       word.card = card
