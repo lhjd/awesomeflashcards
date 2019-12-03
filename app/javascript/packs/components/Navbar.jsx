@@ -31,7 +31,7 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            100 Words
+            ¡Hola!
           </Typography>
           {/* <Button color="inherit">Login</Button> */}
         </Toolbar>

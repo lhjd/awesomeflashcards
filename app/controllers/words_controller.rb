@@ -43,6 +43,7 @@ class WordsController < ApplicationController
     params = {isEasy: isEasy, isHard: isHard, card: card, user: current_user}
     # @word = Word.create(params)
     # @word.save
+    # byebug
 
     @word = Word.find_or_create_by(id: id) do |word|
       word.isEasy = isEasy

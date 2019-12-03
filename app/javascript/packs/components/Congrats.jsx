@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CongratsImage from '../../../assets/images/congrats.svg';
 import Grid from '@material-ui/core/Grid';
+import { Context } from '../App';
 
 const useStyles = makeStyles({
   card: {
@@ -21,6 +22,13 @@ const useStyles = makeStyles({
 
 export default function MediaCard() {
   const classes = useStyles();
+
+  const dispatch = useContext(Context);
+
+  const handleClick = () => {
+    console.log("restart!");
+    dispatch({ type: "RESTART" });
+  }
 
   return (
     <Grid
@@ -51,7 +59,7 @@ export default function MediaCard() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleClick}>
           Restart
         </Button>
       </CardActions>

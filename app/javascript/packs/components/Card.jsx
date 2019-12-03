@@ -88,7 +88,12 @@ export default function Card(props) {
           savedWordId: props.savedWordId
         })
         .then(function (response) {
-          dispatch({ type: "TOGGLE_EASY_HARD", payload: {isEasy: response.data.data.isEasy, isHard: response.data.data.isHard}});
+          console.log(response);
+          dispatch({ type: "TOGGLE_EASY_HARD", 
+          payload: {isEasy: response.data.data.isEasy, 
+                    isHard: response.data.data.isHard,
+                    savedWord: response.data.data,
+                    savedWordId: response.data.data.id}});
         })
         .catch(function (error) {
           console.log("*** error ***");
@@ -107,8 +112,12 @@ export default function Card(props) {
           savedWordId: props.savedWordId
         })
         .then(function (response) {
-          // console.log(response);
-          dispatch({ type: "TOGGLE_EASY_HARD", payload: {isEasy: response.data.data.isEasy, isHard: response.data.data.isHard}});
+          console.log(response);
+          dispatch({ type: "TOGGLE_EASY_HARD", 
+          payload: {isEasy: response.data.data.isEasy, 
+                    isHard: response.data.data.isHard,
+                    savedWord: response.data.data,
+                    savedWordId: response.data.data.id}});
         })
         .catch(function (error) {
           console.log("*** error ***");

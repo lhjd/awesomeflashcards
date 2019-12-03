@@ -15,7 +15,7 @@ Card.create([
     {front: "he is, she is, it is (permanent characteristics)", back: "es"},
     {front: "and", back: "y"},
     {front: "in, on, at", back: "en"},
-#     {front: "it, him (direct object pronoun)", back: "lo"},
+    {front: "it, him (direct object pronoun)", back: "lo"},
 #     {front: "a, an (for singular masculine nouns)", back: "un"},
 #     {front: "for, by, through", back: "por"},
 #     {front: "what / how (as in “how nice!”)", back: "qué"},

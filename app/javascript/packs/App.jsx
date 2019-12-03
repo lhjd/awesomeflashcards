@@ -22,7 +22,7 @@ const reducer = (state, action) => {
         let newWordId = state.words[newWordIndex].id;
 
         let apple = state.savedWords.find(word => word.card_id === newWordId);   
-        console.log("*** apple ***", apple);
+        // console.log("*** apple ***", apple);
         if (apple) {
           let niceIsEasy = apple.isEasy;
           let niceIsHard = apple.isHard;
@@ -38,7 +38,7 @@ const reducer = (state, action) => {
                   isHard: niceIsHard,
                   savedWordId: niceSavedWordId};
         } else {
-          console.log("*** no saved words!!! ***");
+          // console.log("*** no saved words!!! ***");
           return { ...state, 
             wordIndex: newWordIndex, 
             frontWord: newFrontWord, 
@@ -124,17 +124,71 @@ const reducer = (state, action) => {
           return state;
         }
       }
-      
     case 'FLIP':
       let newFlipped = !state.flipped;
       return { ...state, flipped: newFlipped };
+    case 'RESTART':
+      console.log("*** RESTART!!! ***");
+      let newFrontWord = state.words[0].front;
+      let newBackWord = state.words[0].back;
+      let newWordId = state.words[0].id;
+
+      let apple = state.savedWords.find(word => word.card_id === newWordId);   
+      if (apple) {
+        let niceIsEasy = apple.isEasy;
+        let niceIsHard = apple.isHard;
+        let niceSavedWordId = apple.id;
+
+      return {...state, 
+              progress: 0,
+              percentComplete: 0,
+              endOfQuiz: false,
+              wordId: newWordId,
+              wordIndex: 0,
+              frontWord: newFrontWord,
+              backWord: newBackWord,
+              isEasy: niceIsEasy,
+              isHard: niceIsHard,
+              questionIndex: 0,
+              savedWordId: niceSavedWordId};
+      } else {
+        console.log("*** no saved word upon restart!!! ***")
+        return {...state, 
+          questionIndex: 0,
+          progress: 0,
+          percentComplete: 0,
+          endOfQuiz: false,
+          wordIndex: 0,
+          wordId: newWordId,
+          frontWord: newFrontWord,
+          backWord: newBackWord,
+          isEasy: false,
+          isHard: false
+          };
+      }
+
     case 'TOGGLE_EASY_HARD': 
       let wowIsEasy = action.payload.isEasy;
       let wowIsHard = action.payload.isHard;
-      return {...state, isEasy: wowIsEasy, isHard: wowIsHard};
+      let wowSavedWordId = action.payload.savedWordId;
+      let wowSavedWord = action.payload.savedWord;
+      let newSavedWords = state.savedWords;
+
+      if (state.savedWords.filter(e => e.id === wowSavedWordId).length === 0) {
+        newSavedWords = [...state.savedWords, wowSavedWord];
+      } 
+      
+      return {...state, 
+              isEasy: wowIsEasy, 
+              isHard: wowIsHard,
+              savedWordId: wowSavedWordId,
+              savedWords: newSavedWords
+              };
+
     case 'PROGRESS':
       let newProgress = state.progress + 1;
       return { ...state, progress: newProgress };
+
     case 'CHECK_ANSWER':
       if (state.questionIndex < state.words.length -1 ) {
         let submittedAnswer = action.payload.choice;
@@ -179,7 +233,7 @@ const reducer = (state, action) => {
           let newProgress = state.progress + 1;
           let newChoiceBtnColor = ['secondary', 'secondary', 'secondary'];
           let newChoiceDisabled = [false, false, false];
-          console.log("*** END OF QUIZ! ***");
+          // console.log("*** END OF QUIZ! ***");
           return {
             ...state,
             progress: newProgress,
@@ -224,7 +278,7 @@ export default function App() {
     axios.get('/words.json')
       .then(function (response) {
         // handle success
-        // console.log("*** response.data ***", response.data);
+        console.log("*** response.data ***", response.data);
         dispatch({ type: 'INITIALIZE_SAVED_WORDS', payload: response.data })
       })
       .catch(function (error) {
@@ -263,6 +317,7 @@ export default function App() {
   if (!state.words) {
     return false;
   } else {
+    console.log("*** state.savedWordId ***", state.savedWordId);
     return (
       <>
         <Navbar />
