@@ -21,8 +21,8 @@ const reducer = (state, action) => {
         let newBackWord = state.words[newWordIndex].back;
         let newWordId = state.words[newWordIndex].id;
 
-        let apple = state.savedWords.find(word => word.id === newWordId);   
-
+        let apple = state.savedWords.find(word => word.card_id === newWordId);   
+        console.log("*** apple ***", apple);
         if (apple) {
           let niceIsEasy = apple.isEasy;
           let niceIsHard = apple.isHard;
@@ -52,7 +52,7 @@ const reducer = (state, action) => {
         let newBackWord = state.words[0].back;
         let newWordId = state.words[0].id;
 
-        let apple = state.savedWords.find(word => word.id === newWordId);   
+        let apple = state.savedWords.find(word => word.card_id === newWordId);   
 
         if (apple) {
           let niceIsEasy = apple.isEasy;
@@ -103,17 +103,21 @@ const reducer = (state, action) => {
       // console.log("*** initialSavedWords ***", initialSavedWords);
       // console.log("*** state.wordId ***", state.wordId);
 
-      let banana = initialSavedWords.find(word => word.id === state.wordId);
+      if (initialSavedWords) {
+        let banana = initialSavedWords.find(word => word.card_id === state.wordId);
+        if (banana) {
+          // console.log("*** banana ***", banana);
+          let newIsEasy = banana.isEasy;
+          let newIsHard = banana.isHard;
+          return { ...state, 
+                  savedWords: initialSavedWords,
+                  isEasy: newIsEasy,
+                  isHard: newIsHard};
+        } else {
+          return state;
+        }
+      }
       
-      let newIsEasy = banana.isEasy;
-      let newIsHard = banana.isHard;
-
-      // console.log("*** banana ***", banana);
-
-      return { ...state, 
-              savedWords: initialSavedWords,
-              isEasy: newIsEasy,
-              isHard: newIsHard};
     case 'FLIP':
       let newFlipped = !state.flipped;
       return { ...state, flipped: newFlipped };
@@ -233,7 +237,7 @@ export default function App() {
     {
       wordIndex: 0,
       words: [],
-      wordId: null, //cardId 
+      wordId: 1, //cardId 
       frontWord: "",
       backWord: "",
       flipped: false,
