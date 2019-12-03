@@ -1,13 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Easy:</strong>
-  <%= @word.easy %>
+  <strong>Iseasy:</strong>
+  <%= @word.isEasy %>
 </p>
 
 <p>
-  <strong>Hard:</strong>
-  <%= @word.hard %>
+  <strong>Ishard:</strong>
+  <%= @word.isHard %>
+</p>
+
+<p>
+  <strong>References:</strong>
+  <%= @word.references %>
 </p>
 
 <%= link_to 'Edit', edit_word_path(@word) %> |

@@ -58,9 +58,30 @@ const reducer = (state, action) => {
               frontWord: initialFrontWord, 
               backWord: initialBackWord,
               wordId: initialWordId };
+    case 'INITIALIZE_SAVED_WORDS':
+      let initialSavedWords = action.payload;
+      
+      // console.log("*** initialSavedWords ***", initialSavedWords);
+      // console.log("*** state.wordId ***", state.wordId);
+
+      let banana = initialSavedWords.find(word => word.id === state.wordId);
+      
+      let newIsEasy = banana.isEasy;
+      let newIsHard = banana.isHard;
+
+      // console.log("*** banana ***", banana);
+
+      return { ...state, 
+              savedWords: initialSavedWords,
+              isEasy: newIsEasy,
+              isHard: newIsHard};
     case 'FLIP':
       let newFlipped = !state.flipped;
       return { ...state, flipped: newFlipped };
+    case 'TOGGLE_EASY_HARD': 
+      let wowIsEasy = action.payload.isEasy;
+      let wowIsHard = action.payload.isHard;
+      return {...state, isEasy: wowIsEasy, isHard: wowIsHard};
     case 'PROGRESS':
       let newProgress = state.progress + 1;
       return { ...state, progress: newProgress };
@@ -149,13 +170,31 @@ export default function App() {
       .finally(function () {
         // always executed
       });
+
+    axios.get('/words.json')
+      .then(function (response) {
+        // handle success
+        // console.log("*** response.data ***", response.data);
+        dispatch({ type: 'INITIALIZE_SAVED_WORDS', payload: response.data })
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+
+
+
+
   }, []);
 
   const [state, dispatch] = useReducer(reducer,
     {
       wordIndex: 0,
       words: [],
-      wordId: null,
+      wordId: null, //cardId 
       frontWord: "",
       backWord: "",
       flipped: false,
@@ -164,13 +203,15 @@ export default function App() {
       choiceBtnColor: ["secondary", "secondary", "secondary"],
       choiceDisabled: [false, false, false],
       endOfQuiz: false,
-      percentComplete: 0
+      percentComplete: 0,
+      isEasy: false,
+      isHard: false,
+      savedWords: [],
     });
 
   if (!state.words) {
     return false;
   } else {
-    // console.log("*** state.words ***", state.words);
     return (
       <>
         <Navbar />
@@ -206,9 +247,12 @@ export default function App() {
               <Card
                 frontWord={state.frontWord}
                 backWord={state.backWord}
+                isEasy={state.isEasy}
+                isHard={state.isHard}
                 wordId={state.wordId}
                 flipped={state.flipped}
-                flippable={true} />
+                flippable={true}
+                savedWords={state.savedWords} />
               <Controls />
             </Box>)
           }

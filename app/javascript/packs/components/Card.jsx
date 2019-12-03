@@ -29,8 +29,10 @@ const cx = classnames.bind(styles);
 export default function Card(props) {
 
   const dispatch = useContext(Context);
-  const [isEasy, setIsEasy] = useState(false);
-  const [isHard, setIsHard] = useState(false);
+  // const [isEasy, setIsEasy] = useState(false);
+  // const [isHard, setIsHard] = useState(false);
+
+  // let {isEasy, isHard} = props;
 
   let {frontWord, backWord, flipped, flippable} = props;
 
@@ -45,13 +47,13 @@ export default function Card(props) {
 
   const thumbsUp = cx(
     { // dynamic styles
-      [styles.isEasy]: isEasy,// make the key the style name, and the value the dynamic boolean
+      [styles.isEasy]: props.isEasy,// make the key the style name, and the value the dynamic boolean
     }
   );
 
   const thumbsDown = cx(
     { // dynamic styles
-      [styles.isHard]: isHard// make the key the style name, and the value the dynamic boolean
+      [styles.isHard]: props.isHard// make the key the style name, and the value the dynamic boolean
     }
   );
 
@@ -67,23 +69,24 @@ export default function Card(props) {
       }
   }
 
+  const csrfToken = document.querySelector("meta[name=csrf-token]").content;
+
   const handleClickThumb = (event, type) => {
     // prevent the card from being flipped due to event bubbling
     event.stopPropagation();
     switch(type) {
       case 'easy':
-        setIsEasy(!isEasy);
-        setIsHard(false);
-        const csrfToken = document.querySelector("meta[name=csrf-token]").content;
+        // setIsEasy(!isEasy);
+        // setIsHard(false);
         axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
         axios.post('/words.json', {
           word: props.backWord,
-          easy: !isEasy,
+          easy: !props.isEasy,
           hard: false,
           wordId: props.wordId
         })
         .then(function (response) {
-          console.log(response);
+          dispatch({ type: "TOGGLE_EASY_HARD", payload: {isEasy: response.data.data.isEasy, isHard: response.data.data.isHard}});
         })
         .catch(function (error) {
           console.log("*** error ***");
@@ -91,8 +94,23 @@ export default function Card(props) {
         });              
         break; 
       case 'hard':
-        setIsHard(!isHard);
-        setIsEasy(false);
+        // setIsHard(!isHard);
+        // setIsEasy(false);
+        axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
+        axios.post('/words.json', {
+          word: props.backWord,
+          easy: false,
+          hard: !props.isHard,
+          wordId: props.wordId
+        })
+        .then(function (response) {
+          // console.log(response);
+          dispatch({ type: "TOGGLE_EASY_HARD", payload: {isEasy: response.data.data.isEasy, isHard: response.data.data.isHard}});
+        })
+        .catch(function (error) {
+          console.log("*** error ***");
+          console.log(error);
+        });
         break; 
       default:
         throw new Error(":( Error in switch statement");

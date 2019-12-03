@@ -17,7 +17,7 @@ class WordsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create word" do
     assert_difference('Word.count') do
-      post words_url, params: { word: { easy: @word.easy, hard: @word.hard } }
+      post words_url, params: { word: { isEasy: @word.isEasy, isHard: @word.isHard, references: @word.references } }
     end
 
     assert_redirected_to word_url(Word.last)
@@ -34,7 +34,7 @@ class WordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update word" do
-    patch word_url(@word), params: { word: { easy: @word.easy, hard: @word.hard } }
+    patch word_url(@word), params: { word: { isEasy: @word.isEasy, isHard: @word.isHard, references: @word.references } }
     assert_redirected_to word_url(@word)
   end
 

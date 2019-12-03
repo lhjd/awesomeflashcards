@@ -5,10 +5,13 @@
 <table>
   <thead>
     <tr>
+      <th>Word Id</th>
+      <th>Card Id</th>
       <th>Front</th>
       <th>Back</th>
-      <th>Easy</th>
-      <th>Hard</th>
+      <th>isEasy</th>
+      <th>isHard</th>
+      <th>References</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,10 +19,12 @@
   <tbody>
     <% @words.each do |word| %>
       <tr>
+        <td><%= word.id %></td>
+        <td><%= word.card.id %></td>
         <td><%= word.card.front %></td>
         <td><%= word.card.back %></td>
-        <td><%= word.easy %></td>
-        <td><%= word.hard %></td>
+        <td><%= word.isEasy %></td>
+        <td><%= word.isHard %></td>
         <td><%= link_to 'Show', word %></td>
         <td><%= link_to 'Edit', edit_word_path(word) %></td>
         <td><%= link_to 'Destroy', word, method: :delete, data: { confirm: 'Are you sure?' } %></td>

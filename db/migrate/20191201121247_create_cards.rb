@@ -3,7 +3,6 @@ class CreateCards < ActiveRecord::Migration[6.0]
     create_table :cards do |t|
       t.string :front
       t.string :back
-
       t.timestamps
     end
   end

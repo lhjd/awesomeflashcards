@@ -14,8 +14,9 @@ class WordsTest < ApplicationSystemTestCase
     visit words_url
     click_on "New Word"
 
-    fill_in "Easy", with: @word.easy
-    fill_in "Hard", with: @word.hard
+    check "Iseasy" if @word.isEasy
+    check "Ishard" if @word.isHard
+    fill_in "References", with: @word.references
     click_on "Create Word"
 
     assert_text "Word was successfully created"
@@ -26,8 +27,9 @@ class WordsTest < ApplicationSystemTestCase
     visit words_url
     click_on "Edit", match: :first
 
-    fill_in "Easy", with: @word.easy
-    fill_in "Hard", with: @word.hard
+    check "Iseasy" if @word.isEasy
+    check "Ishard" if @word.isHard
+    fill_in "References", with: @word.references
     click_on "Update Word"
 
     assert_text "Word was successfully updated"

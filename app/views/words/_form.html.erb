@@ -12,13 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :easy %>
-    <%= form.text_field :easy %>
+    <%= form.label :isEasy %>
+    <%= form.check_box :isEasy %>
   </div>
 
   <div class="field">
-    <%= form.label :hard %>
-    <%= form.text_field :hard %>
+    <%= form.label :isHard %>
+    <%= form.check_box :isHard %>
+  </div>
+
+  <div class="field">
+    <%= form.label :references %>
+    <%= form.text_field :references %>
   </div>
 
   <div class="actions">
