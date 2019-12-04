@@ -62,7 +62,7 @@ const EasterEgg = () => {
     }, []);
 
     const updateScore = () => {
-        console.log("update score!");
+        // console.log("update score!");
         setScore(score => score + 1);
     }
 

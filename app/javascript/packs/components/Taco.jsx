@@ -54,21 +54,21 @@ const Taco = () => {
                     return run + 1;
                 }
             });
-        }, 500);
+        }, 1000);
 
         return () => clearInterval(interval);
     }, []);
 
 
     return (
-        <Paper className={classes.paper} elevation={24}>
+        <Paper className={classes.paper} elevation={24} onClick={handleWow}>
             <Typography variant="h5" component="h3">
                 {/* run: {run} */}
                 {run === getRandomInt(1, 5) &&
                     // <div onClick={handleWow}>wow</div>
-                    <Box display="flex" flexDirection="column" className="animated rubberBand">
+                    <Box display="flex" flexDirection="column" className="animated rubberBand" >
                         <Box display="flex">
-                            <img src={MonsterImage} width="50px" onClick={handleWow} />
+                            <img src={MonsterImage} width="50px"  />
                         </Box>
                         {/* <small>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small> */}
                     </Box>                                    
