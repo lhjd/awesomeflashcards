@@ -116,14 +116,9 @@ const reducer = (state, action) => {
       };
     case 'INITIALIZE_SAVED_WORDS':
       let initialSavedWords = action.payload;
-
-      // console.log("*** initialSavedWords ***", initialSavedWords);
-      // console.log("*** state.wordId ***", state.wordId);
-
       if (initialSavedWords) {
         let banana = initialSavedWords.find(word => word.card_id === state.wordId);
         if (banana) {
-          // console.log("*** banana ***", banana);
           let newIsEasy = banana.isEasy;
           let newIsHard = banana.isHard;
           let newSavedWordId = banana.id;
@@ -142,7 +137,6 @@ const reducer = (state, action) => {
       let newFlipped = !state.flipped;
       return { ...state, flipped: newFlipped };
     case 'RESTART':
-      console.log("*** RESTART!!! ***");
       let newFrontWord = state.words[0].front;
       let newBackWord = state.words[0].back;
       let newWordId = state.words[0].id;
@@ -168,7 +162,6 @@ const reducer = (state, action) => {
           savedWordId: niceSavedWordId
         };
       } else {
-        console.log("*** no saved word upon restart!!! ***")
         return {
           ...state,
           questionIndex: 0,
@@ -304,7 +297,6 @@ export default function App() {
     axios.get('/cards.json')
       .then(function (response) {
         // handle success
-        // console.log("*** response.data ***", response.data);
         dispatch({ type: 'INITIALIZE_CARDS', payload: response.data })
       })
       .catch(function (error) {
@@ -318,7 +310,6 @@ export default function App() {
     axios.get('/words.json')
       .then(function (response) {
         // handle success
-        // console.log("*** response.data ***", response.data);
         dispatch({ type: 'INITIALIZE_SAVED_WORDS', payload: response.data })
       })
       .catch(function (error) {
@@ -359,7 +350,6 @@ export default function App() {
   if (!state.words) {
     return false;
   } else {
-    // console.log("*** state.savedWordId ***", state.savedWordId);
     return (
       <>
         <Navbar />

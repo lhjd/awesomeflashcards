@@ -88,7 +88,7 @@ export default function Card(props) {
           savedWordId: props.savedWordId
         })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
           dispatch({ type: "TOGGLE_EASY_HARD", 
           payload: {isEasy: response.data.data.isEasy, 
                     isHard: response.data.data.isHard,
@@ -112,7 +112,7 @@ export default function Card(props) {
           savedWordId: props.savedWordId
         })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
           dispatch({ type: "TOGGLE_EASY_HARD", 
           payload: {isEasy: response.data.data.isEasy, 
                     isHard: response.data.data.isHard,
