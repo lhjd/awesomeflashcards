@@ -39,6 +39,7 @@ const Taco = () => {
 
     const updateScore = useContext(EasterEggContext);
 
+
     const handleWow = () => {
         updateScore();
     }
@@ -54,7 +55,7 @@ const Taco = () => {
                     return run + 1;
                 }
             });
-        }, 1000);
+        }, 2000);
 
         return () => clearInterval(interval);
     }, []);
@@ -66,7 +67,7 @@ const Taco = () => {
                 {/* run: {run} */}
                 {run === getRandomInt(1, 5) &&
                     // <div onClick={handleWow}>wow</div>
-                    <Box display="flex" flexDirection="column" className="animated rubberBand" onClick={handleWow}>
+                    <Box display="flex" flexDirection="column" className="animated swing" onClick={handleWow}>
                         <Box display="flex">
                             <img src={MonsterImage} width="50px"  />
                         </Box>
