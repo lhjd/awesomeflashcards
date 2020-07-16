@@ -319,10 +319,6 @@ export default function App() {
       .finally(function () {
         // always executed
       });
-
-
-
-
   }, []);
 
   const [state, dispatch] = useReducer(reducer,

@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
 const cx = classnames.bind(styles);
 
 export default function Card(props) {
-
   const dispatch = useContext(Context);
   // const [isEasy, setIsEasy] = useState(false);
   // const [isHard, setIsHard] = useState(false);
